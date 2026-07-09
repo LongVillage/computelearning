@@ -107,12 +107,19 @@ resource "scaleway_edge_services_tls_stage" "site" {
   managed_certificate = true
 }
 
-# Pas de fqdns : on sert sur le domaine par défaut fourni par Scaleway
-# (default_fqdn en output). Un futur domaine = ajouter fqdns ici.
+# Sert sur le domaine custom (certificat Let's Encrypt managé par le tls_stage)
+# et sur le default_fqdn Scaleway, qui reste actif en parallèle.
 resource "scaleway_edge_services_dns_stage" "site" {
   pipeline_id  = scaleway_edge_services_pipeline.site.id
   tls_stage_id = scaleway_edge_services_tls_stage.site.id
   project_id   = var.project_id
+
+  # Apex volontairement absent : le contrôle d'Edge exige un vrai CNAME, or un
+  # ALIAS s'aplatit en A — le warning dns_cname_resolve bloque l'émission du
+  # certificat pour tout le set. www est l'URL canonique.
+  fqdns = [
+    "www.${var.domain}",
+  ]
 }
 
 resource "scaleway_edge_services_head_stage" "site" {

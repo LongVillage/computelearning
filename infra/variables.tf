@@ -8,6 +8,12 @@ variable "owner_user_id" {
   type        = string
 }
 
+variable "domain" {
+  description = "Domaine du site (zone DNS gérée chez Scaleway, même projet)."
+  type        = string
+  default     = "onverraplustard.eu"
+}
+
 variable "site_bucket_name" {
   description = "Nom du bucket qui contient le site buildé (unique par région Scaleway)."
   type        = string

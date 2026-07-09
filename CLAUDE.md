@@ -36,8 +36,11 @@ Docs Astro : https://docs.astro.build — notamment
 ## Gouvernance & déploiement
 
 - Repo public, `main` protégée : tout passe par PR, merge = décision de Julien.
-- **Prod : https://2d7b7ca2-9ded-41d4-b573-d7552f027199.svc.edge.scw.cloud**
-  (bucket Scaleway + Edge Services, voir `infra/README.md`). Déploiement
+- **Prod : https://www.onverraplustard.eu** (URL canonique ; le endpoint
+  https://2d7b7ca2-9ded-41d4-b573-d7552f027199.svc.edge.scw.cloud reste actif).
+  Bucket Scaleway + Edge Services, voir `infra/README.md`. L'apex nu ne sert pas
+  de HTTPS (limitation CNAME d'Edge Services, expliquée dans `infra/main.tf`).
+  Déploiement
   automatique à chaque push sur `main` (`.github/workflows/site.yml`) ;
   cache Edge TTL 1 h, pas de purge auto.
 - Infra : Terraform dans `infra/`, apply manuel en local uniquement

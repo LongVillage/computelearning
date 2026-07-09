@@ -69,6 +69,15 @@ GitHub Actions.
 
    Clé actuelle : expire le 2027-07-09 — la renouveler avant.
 
+## Domaine
+
+`onverraplustard.eu` est acheté chez Scaleway (zone DNS dans le même projet,
+records en Terraform dans `dns.tf`). **URL canonique : https://www.onverraplustard.eu**
+(CNAME → pipeline Edge, certificat Let's Encrypt managé, renouvelé par Scaleway).
+L'apex nu a un ALIAS mais n'est pas dans les `fqdns` du pipeline : le contrôle
+d'Edge exige un vrai CNAME et un ALIAS s'aplatit en A, ce qui bloquait
+l'émission du certificat pour tout le set.
+
 ## Au quotidien
 
 - Déploiement du site : automatique à chaque push sur `main`
