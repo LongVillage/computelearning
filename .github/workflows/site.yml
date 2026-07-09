@@ -1,0 +1,46 @@
+name: site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # Valide le build sur chaque PR et chaque push : schémas zod + références
+  # du contenu inclus — une ressource cassée = check rouge.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: dist
+          path: dist
+
+  # Déploie uniquement ce qui est sur main. Les secrets ne sont jamais
+  # exposés aux PR (a fortiori venant de forks) : ce job ne tourne pas sur PR.
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.SCW_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SCW_SECRET_KEY }}
+      AWS_DEFAULT_REGION: fr-par
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - name: Sync vers le bucket Scaleway
+        run: |
+          aws s3 sync dist/ s3://computelearning-site \
+            --delete \
+            --endpoint-url https://s3.fr-par.scw.cloud
