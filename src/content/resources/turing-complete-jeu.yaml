@@ -1,0 +1,16 @@
+title: "Turing Complete (le jeu)"
+medium: turing-complete
+concepts:
+  - le-bit
+  - portes-logiques
+  - circuits-combinatoires
+  - memoire
+  - horloge-et-sequencage
+  - alu
+  - architecture-cpu
+  - programmes-et-langages
+type: jeu
+url: "https://store.steampowered.com/app/1444480/Turing_Complete/"
+author: "LeveL 91 Entertainment"
+lang: en
+notes: "Le parcours entier du site sous forme de puzzles : de la NAND jusqu'à programmer en assembleur le CPU qu'on a soi-même construit."

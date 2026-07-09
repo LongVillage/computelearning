@@ -1,0 +1,9 @@
+title: "LifeWiki — 8-bit programmable computer"
+medium: jeu-de-la-vie
+concepts:
+  - architecture-cpu
+type: wiki
+url: "https://conwaylife.com/wiki/8-bit_programmable_computer"
+author: "LifeWiki (communauté)"
+lang: en
+notes: "La fiche technique communautaire de l'ordinateur de Loizeau : jeu d'instructions, composants, pattern téléchargeable."

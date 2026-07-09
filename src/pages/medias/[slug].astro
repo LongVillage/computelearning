@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ResourceItem from "../../components/ResourceItem.astro";
+
+export async function getStaticPaths() {
+  const media = await getCollection("media");
+  return media.map((m) => ({ params: { slug: m.id }, props: { medium: m } }));
+}
+
+const { medium } = Astro.props;
+const { Content } = await render(medium);
+
+const concepts = (await getCollection("concepts")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const resources = (await getCollection("resources")).filter(
+  (r) => r.data.medium.id === medium.id,
+);
+
+const byConcept = concepts
+  .map((c) => ({
+    concept: c,
+    items: resources.filter((r) =>
+      r.data.concepts.some((ref) => ref.id === c.id),
+    ),
+  }))
+  .filter((group) => group.items.length > 0);
+---
+
+<Base
+  title={`${medium.data.title} — computelearning`}
+  description={medium.data.primitive}
+>
+  <p><a href="/medias/">← Tous les médias</a></p>
+  <h1>{medium.data.title}</h1>
+  <span class="badge">{medium.data.type}</span>
+
+  <div class="primitive">
+    <strong>La primitive logique</strong>
+    {medium.data.primitive}
+  </div>
+
+  <Content />
+
+  {medium.data.links.length > 0 && (
+    <p>
+      Liens :
+      {medium.data.links.map((l, i) => (
+        <>
+          {i > 0 && " · "}
+          <a href={l.url} rel="noopener">{l.label}</a>
+        </>
+      ))}
+    </p>
+  )}
+
+  <h2>Le parcours dans {medium.data.title}</h2>
+  {byConcept.map(({ concept, items }) => (
+    <section id={concept.id}>
+      <h3>
+        <a href={`/concepts/${concept.id}/`}>
+          {concept.data.order}. {concept.data.title}
+        </a>
+      </h3>
+      <ul class="resource-list">
+        {items.map((r) => (
+          <ResourceItem resource={r} />
+        ))}
+      </ul>
+    </section>
+  ))}
+</Base>

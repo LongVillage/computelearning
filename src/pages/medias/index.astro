@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+const media = (await getCollection("media")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, "fr"),
+);
+const resources = await getCollection("resources");
+---
+
+<Base title="Les médias — computelearning">
+  <h1>Les médias</h1>
+  <p>
+    Un média est un univers — jeu, simulation, objet physique — dans lequel on peut
+    construire un ordinateur. Chacun a sa <em>primitive</em> : la chose qui y joue le
+    rôle de porte logique.
+  </p>
+  <ul class="card-grid">
+    {media.map((m) => {
+      const n = resources.filter((r) => r.data.medium.id === m.id).length;
+      return (
+        <li class="card">
+          <h3><a href={`/medias/${m.id}/`}>{m.data.title}</a></h3>
+          <span class="badge">{m.data.type}</span>
+          <p>{m.data.primitive}</p>
+          <p>{n} ressource{n > 1 ? "s" : ""}</p>
+        </li>
+      );
+    })}
+  </ul>
+</Base>

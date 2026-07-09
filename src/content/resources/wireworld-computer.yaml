@@ -1,0 +1,11 @@
+title: "The Wireworld computer"
+medium: wireworld
+concepts:
+  - portes-logiques
+  - memoire
+  - architecture-cpu
+type: article
+url: "https://www.quinapalus.com/wi-index.html"
+author: "David Moore & Mark Owen"
+lang: en
+notes: "Un ordinateur complet qui calcule les nombres premiers, visible en entier sur un seul écran — composant par composant."

@@ -1,0 +1,11 @@
+title: "Making a Binary Computer with 10,000 Dominoes (conférence)"
+medium: dominos
+concepts:
+  - le-bit
+  - portes-logiques
+  - circuits-combinatoires
+type: video
+url: "https://www.youtube.com/watch?v=5CGaKBwSS0k"
+author: "Matt Parker (G4G Celebration)"
+lang: en
+notes: "La conférence qui explique le comment : signal par chute, portes OR/AND/XOR en croisements de chaînes."

@@ -1,0 +1,15 @@
+title: "Logical Redstone Reloaded (série de tutoriels)"
+medium: minecraft
+concepts:
+  - le-bit
+  - portes-logiques
+  - circuits-combinatoires
+  - memoire
+  - horloge-et-sequencage
+  - alu
+  - architecture-cpu
+type: cours
+url: "https://www.youtube.com/playlist?list=PL5LiOvrbVo8keeEWRZVaHfprU4zQTCsV4"
+author: "mattbatwings"
+lang: en
+notes: "La série pédagogique de référence : des bases de la redstone jusqu'au CPU, étape par étape. Le parcours complet du site, dans un seul média."

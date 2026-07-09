@@ -1,0 +1,10 @@
+title: "Game of life: programmable computer"
+medium: jeu-de-la-vie
+concepts:
+  - architecture-cpu
+  - programmes-et-langages
+type: video
+url: "https://www.youtube.com/watch?v=8unMqSp0bFY"
+author: "Nicolas Loizeau"
+lang: en
+notes: "Un ordinateur 8 bits programmable construit en collisions de gliders, qui calcule Fibonacci."

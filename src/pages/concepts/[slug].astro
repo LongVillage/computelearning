@@ -1,0 +1,76 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ResourceItem from "../../components/ResourceItem.astro";
+
+export async function getStaticPaths() {
+  const concepts = await getCollection("concepts");
+  return concepts.map((c) => ({
+    params: { slug: c.id },
+    props: { concept: c },
+  }));
+}
+
+const { concept } = Astro.props;
+const { Content } = await render(concept);
+
+const allConcepts = (await getCollection("concepts")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const media = (await getCollection("media")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, "fr"),
+);
+const resources = (await getCollection("resources")).filter((r) =>
+  r.data.concepts.some((ref) => ref.id === concept.id),
+);
+
+const byMedium = media
+  .map((m) => ({
+    medium: m,
+    items: resources.filter((r) => r.data.medium.id === m.id),
+  }))
+  .filter((group) => group.items.length > 0);
+
+const index = allConcepts.findIndex((c) => c.id === concept.id);
+const prev = index > 0 ? allConcepts[index - 1] : undefined;
+const next =
+  index < allConcepts.length - 1 ? allConcepts[index + 1] : undefined;
+---
+
+<Base
+  title={`${concept.data.title} — computelearning`}
+  description={concept.data.summary}
+>
+  <p><a href="/concepts/">← Tous les concepts</a></p>
+  <h1>{concept.data.order}. {concept.data.title}</h1>
+  <p><em>{concept.data.summary}</em></p>
+
+  <Content />
+
+  <h2>Le même concept, en parallèle</h2>
+  {byMedium.length === 0 && (
+    <p>
+      Aucune ressource pour l'instant — <a href="/contribuer/">proposer la première</a>.
+    </p>
+  )}
+  {byMedium.map(({ medium, items }) => (
+    <section>
+      <h3><a href={`/medias/${medium.id}/`}>{medium.data.title}</a></h3>
+      <ul class="resource-list">
+        {items.map((r) => (
+          <ResourceItem resource={r} />
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <p>
+    {prev && (
+      <a href={`/concepts/${prev.id}/`}>← {prev.data.title}</a>
+    )}
+    {prev && next && " · "}
+    {next && (
+      <a href={`/concepts/${next.id}/`}>{next.data.title} →</a>
+    )}
+  </p>
+</Base>

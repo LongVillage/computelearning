@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+const concepts = (await getCollection("concepts")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const resources = await getCollection("resources");
+---
+
+<Base title="Les concepts — computelearning">
+  <h1>Les concepts</h1>
+  <p>
+    L'échelle qui mène du signal binaire à la machine programmable. Chaque étape
+    s'appuie sur la précédente — et chacune existe dans plusieurs univers à la fois.
+  </p>
+  <ul class="card-grid">
+    {concepts.map((c) => {
+      const n = resources.filter((r) =>
+        r.data.concepts.some((ref) => ref.id === c.id),
+      ).length;
+      return (
+        <li class="card">
+          <h3>
+            <a href={`/concepts/${c.id}/`}>{c.data.order}. {c.data.title}</a>
+          </h3>
+          <p>{c.data.summary}</p>
+          <p>{n} ressource{n > 1 ? "s" : ""}</p>
+        </li>
+      );
+    })}
+  </ul>
+</Base>

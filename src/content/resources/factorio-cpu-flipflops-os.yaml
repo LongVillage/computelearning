@@ -1,0 +1,13 @@
+title: "Building a CPU in Factorio: From D-Flip-Flops to an Operating System"
+medium: factorio
+concepts:
+  - memoire
+  - horloge-et-sequencage
+  - alu
+  - architecture-cpu
+  - programmes-et-langages
+type: video
+url: "https://www.youtube.com/watch?v=QcQYEAr0Yos"
+author: "2birdbrained4u"
+lang: en
+notes: "Le parcours complet en combinators : bascules, registres, CPU, jusqu'à un embryon de système d'exploitation."

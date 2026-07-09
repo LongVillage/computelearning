@@ -1,0 +1,10 @@
+title: "Golly (simulateur d'automates cellulaires)"
+medium: jeu-de-la-vie
+concepts:
+  - le-bit
+type: outil
+url: "https://golly.sourceforge.io/"
+author: "Andrew Trevorrow & Tom Rokicki"
+lang: en
+license: "GPL-2.0"
+notes: "L'outil libre pour explorer soi-même : charger les patterns (dont les ordinateurs) et les voir tourner à grande vitesse."

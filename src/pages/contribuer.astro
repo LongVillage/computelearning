@@ -1,0 +1,46 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Contribuer — computelearning">
+  <h1>Contribuer</h1>
+  <p>
+    Tout le contenu du site est constitué de fichiers texte versionnés sur GitHub.
+    Ajouter une ressource — une vidéo, un wiki, une save, un article — c'est ajouter
+    un fichier d'une dizaine de lignes, via une pull request.
+  </p>
+
+  <h2>Ajouter une ressource</h2>
+  <p>
+    Créer un fichier <code>src/content/resources/mon-media-ma-ressource.yaml</code> :
+  </p>
+  <pre><code>{`title: "Titre de la ressource"
+medium: minecraft          # un média existant (src/content/media/)
+concepts:                  # au moins un concept (src/content/concepts/)
+  - portes-logiques
+type: video                # video | wiki | article | save | outil | cours | jeu
+url: "https://…"
+author: "Auteur ou communauté"
+lang: en
+notes: "Une phrase qui dit pourquoi cette ressource vaut le détour."`}</code></pre>
+  <p>
+    Le build vérifie automatiquement le format : une référence cassée vers un média ou
+    un concept inexistant fait échouer la validation.
+  </p>
+
+  <h2>Proposer un nouveau média</h2>
+  <p>
+    Tout univers où l'on peut construire une porte logique a sa place ici — jeux,
+    simulations, objets physiques, et plus tard BD, cours, approches mathématiques.
+    Créer un fichier dans <code>src/content/media/</code> en s'inspirant des
+    existants, en identifiant bien la <em>primitive</em> : qu'est-ce qui y joue le
+    rôle de porte logique ?
+  </p>
+
+  <h2>Les règles</h2>
+  <ul>
+    <li>Ne lier que des ressources publiquement accessibles, en citant leurs auteurs.</li>
+    <li>Les cases vides de la <a href="/">matrice</a> sont les contributions les plus utiles.</li>
+    <li>Toute proposition passe par pull request ; la décision de merge revient au mainteneur.</li>
+  </ul>
+</Base>

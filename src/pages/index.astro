@@ -1,0 +1,84 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const concepts = (await getCollection("concepts")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const media = (await getCollection("media")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, "fr"),
+);
+const resources = await getCollection("resources");
+
+function count(conceptId: string, mediumId: string): number {
+  return resources.filter(
+    (r) =>
+      r.data.medium.id === mediumId &&
+      r.data.concepts.some((c) => c.id === conceptId),
+  ).length;
+}
+---
+
+<Base title="computelearning — le même ordinateur, dans tous les univers">
+  <h1>Le même ordinateur, dans tous les univers</h1>
+  <p>
+    On a construit des ordinateurs fonctionnels dans Minecraft, dans Factorio, dans le
+    jeu de la vie, avec des dominos. Ce site les réunit et les met en parallèle : parce
+    que voir <em>le même circuit</em> exister dans des univers qui n'ont rien en commun,
+    c'est comprendre ce qu'est vraiment un ordinateur — une idée, pas un objet.
+  </p>
+  <p>
+    Chaque ligne du tableau est une étape du chemin qui mène du signal binaire à la
+    machine programmable. Chaque colonne est un univers où ce chemin a été parcouru.
+  </p>
+
+  <h2>La matrice</h2>
+  <div class="matrix-wrapper">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th></th>
+          {media.map((m) => (
+            <th><a href={`/medias/${m.id}/`}>{m.data.title}</a></th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {concepts.map((c) => (
+          <tr>
+            <th class="row-head">
+              <a href={`/concepts/${c.id}/`}>{c.data.order}. {c.data.title}</a>
+            </th>
+            {media.map((m) => {
+              const n = count(c.id, m.id);
+              return n > 0 ? (
+                <td class="filled">
+                  <a
+                    href={`/medias/${m.id}/#${c.id}`}
+                    title={`${c.data.title} dans ${m.data.title}`}
+                  >
+                    {n}
+                  </a>
+                </td>
+              ) : (
+                <td class="empty">·</td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="resource-meta">
+    Les cases pleines indiquent le nombre de ressources. Les cases vides sont la
+    todo-list publique du projet — <a href="/contribuer/">contribuer</a>.
+  </p>
+
+  <h2>Lire la matrice dans les deux sens</h2>
+  <p>
+    <strong>En colonne</strong> : suivre tout le parcours à l'intérieur d'un seul
+    univers — <a href="/medias/">choisir un média</a>.<br />
+    <strong>En ligne</strong> : voir un même concept réalisé partout à la fois —
+    <a href="/concepts/">choisir un concept</a>.
+  </p>
+</Base>

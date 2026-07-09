@@ -1,0 +1,12 @@
+title: "CHUNGUS 2 — A very powerful 1Hz Minecraft CPU"
+medium: minecraft
+concepts:
+  - alu
+  - memoire
+  - horloge-et-sequencage
+  - architecture-cpu
+type: video
+url: "https://www.youtube.com/watch?v=FDiapbD0Xfg"
+author: "sammyuri"
+lang: en
+notes: "CPU 8 bits complet en redstone : pipeline, cache, prédiction de branchement, 1 Hz. Fait tourner Tetris et Snake."

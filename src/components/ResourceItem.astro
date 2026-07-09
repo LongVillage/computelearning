@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  resource: CollectionEntry<"resources">;
+}
+const { resource } = Astro.props;
+
+const typeLabels: Record<string, string> = {
+  video: "Vidéo",
+  wiki: "Wiki",
+  article: "Article",
+  save: "Save",
+  outil: "Outil",
+  cours: "Cours",
+  jeu: "Jeu",
+};
+
+const { title, type, url, author, lang, notes } = resource.data;
+---
+
+<li>
+  <span class="badge">{typeLabels[type] ?? type}</span>
+  <a href={url} rel="noopener">{title}</a>
+  <div class="resource-meta">
+    {author} · {lang.toUpperCase()}{notes && <> — {notes}</>}
+  </div>
+</li>

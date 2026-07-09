@@ -1,0 +1,11 @@
+title: "A computer in Conway's game of life (article de conception)"
+medium: jeu-de-la-vie
+concepts:
+  - portes-logiques
+  - memoire
+  - architecture-cpu
+type: article
+url: "https://www.nicolasloizeau.com/gol-computer"
+author: "Nicolas Loizeau"
+lang: en
+notes: "L'article qui explique la conception : canons à gliders, portes logiques par collision, architecture complète."

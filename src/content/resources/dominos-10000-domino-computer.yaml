@@ -1,0 +1,9 @@
+title: "The 10,000 Domino Computer"
+medium: dominos
+concepts:
+  - circuits-combinatoires
+type: video
+url: "https://www.youtube.com/watch?v=OpLU__bhu2w"
+author: "Stand-up Maths (Matt Parker)"
+lang: en
+notes: "Un additionneur binaire 4 bits en 10 000 dominos, construit en public au Manchester Science Festival."
