@@ -55,6 +55,9 @@ const resources = defineCollection({
     lang: z.string().default("en"),
     license: z.string().optional(),
     notes: z.string().optional(),
+    // Durée d'engagement estimée en minutes (une vidéo : sa durée ; un jeu :
+    // le temps pour en tirer le concept). Base des futures stats de la méta.
+    duration: z.number().int().positive().optional(),
   }),
 });
 

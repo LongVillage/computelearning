@@ -67,3 +67,40 @@ Garde-fous décidés en discussion :
   pas une droite.
 - La valeur au départ = le jugement éditorial (quelle ressource mérite sa case),
   pas l'exhaustivité.
+
+## 10. Les signaux et données de la méta
+
+Prolongement de l'idée 9, consigné le 2026-07-09.
+
+### Le vote rare
+
+Un vote **par personne et par domaine**, non transférable et qu'on ne pourra pas
+redonner ailleurs plus tard : « le média qui m'a fait comprendre ». Un signal
+coûteux/rare est plus difficile à falsifier et porte plus d'information
+(signalement coûteux). Par domaine, la donnée est propre : pour chaque personne
+et chaque sujet, un seul média élu comme celui du déclic — le match
+personne↔méthode en version mesurable.
+
+**Couplage à ne jamais oublier** : la rareté crée l'incitation au farming. Plus
+le vote est rare, plus il vaut cher pour celui qui le reçoit, plus les bots
+deviennent économiquement rationnels. La parade est dans le *design*, pas dans
+la modération après coup : faire que le vote ait de la valeur pour le **votant**
+(expression, identité) et non pour le **receveur** — ne pas le brancher
+directement sur le ranking ni la rémunération. Un vote qui ne rapporte rien à
+booster n'attire pas de bots. Décision de design à trancher le jour venu.
+
+### Le temps jusqu'au déclic
+
+La durée brute d'une ressource est un fruit ambigu (une vidéo de 20 min vs
+40 h de Factorio = pommes et oranges). La stat de valeur est la comparaison
+inter-types : « certains ont eu le déclic en 10 minutes de BD, d'autres en
+40 heures de jeu — les deux sont valides ». C'est une méta-donnée qui renforce
+la thèse du site. Trace POC déjà posée : champ `duration` optionnel (minutes)
+dans le schéma des ressources.
+
+### La forme des matrices par domaine
+
+Les futurs domaines (informatique quantique, mécanique, logique…) auront chacun
+leur propre forme de matrice : des domaines riches en jeux, d'autres pauvres ;
+des domaines dominés par la vidéo, d'autres par le papier. La « jouabilité »
+d'un domaine est une méta-donnée en soi — elle dit quelque chose de sa nature.

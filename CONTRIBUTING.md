@@ -19,6 +19,7 @@ author: "Auteur ou communauté"
 lang: en                   # langue de la ressource
 license: "CC BY-SA 4.0"    # optionnel, si la ressource est sous licence libre
 notes: "Une phrase qui dit pourquoi cette ressource vaut le détour."
+duration: 25               # optionnel, durée d'engagement estimée en minutes
 ```
 
 Puis `npm run build` : une référence cassée ou un champ manquant fait échouer le build.
