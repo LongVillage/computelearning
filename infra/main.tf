@@ -25,13 +25,34 @@ resource "scaleway_object_bucket_website_configuration" "site" {
 }
 
 # Lecture publique des objets (site public) — pas de listing du bucket.
+# Attention (spécificité Scaleway) : une bucket policy révoque tout ce qu'elle
+# n'autorise pas explicitement, y compris pour le propriétaire — d'où le
+# statement OwnerFullAccess, sans quoi on se verrouille dehors.
 resource "scaleway_object_bucket_policy" "site" {
   bucket     = scaleway_object_bucket.site.id
   project_id = var.project_id
 
+  # La config website doit passer avant que la policy ne restreigne quoi que ce soit.
+  depends_on = [scaleway_object_bucket_website_configuration.site]
+
   policy = jsonencode({
     Version = "2023-04-17"
     Statement = [
+      {
+        Sid    = "OwnerAndDeployFullAccess"
+        Effect = "Allow"
+        Principal = {
+          SCW = [
+            "user_id:${var.owner_user_id}",
+            "application_id:${scaleway_iam_application.github_deploy.id}",
+          ]
+        }
+        Action = ["*"]
+        Resource = [
+          var.site_bucket_name,
+          "${var.site_bucket_name}/*",
+        ]
+      },
       {
         Sid       = "PublicReadObjects"
         Effect    = "Allow"

@@ -13,7 +13,7 @@ Build vert (`npm run build`, 18 pages).
 
 ## Tranches v1
 
-### T-ci-build-pr — CI de build sur les PR  ⬜
+### T-ci-build-pr — CI de build sur les PR  ✅
 
 - **Objectif** : toute PR (interne ou externe) est validée par un build automatique ;
   une ressource au format cassé produit un check rouge visible avant merge.
@@ -21,7 +21,24 @@ Build vert (`npm run build`, 18 pages).
 - **Fichiers** : `.github/workflows/**`
 - **DoD** : workflow vert sur `main` ; une PR de test avec une référence cassée
   (`medium: inexistant`) affiche un check rouge, puis est fermée sans merge.
-- **Flottaison** : aucun déploiement dans ce workflow — build seul, zéro secret.
+- **Flottaison** : le job deploy (2026-07-09) ne tourne jamais sur PR — les secrets
+  restent inaccessibles aux forks.
+- *Preuve (2026-07-09) : job `build` de `.github/workflows/site.yml`, tourne sur
+  PR et push ; le build valide schémas zod + références. Reste à démontrer le
+  check rouge sur une PR de test réelle à la première occasion.*
+
+### T-deploy-scaleway — Site en prod sur Scaleway  ✅
+
+- **Objectif** : le site est servi en HTTPS public depuis Scaleway, redéployé à
+  chaque push sur `main`, pour ~1 €/mois.
+- **Dépend de** : —
+- **Fichiers** : `infra/**`, `.github/workflows/**`
+- **DoD** : `terraform plan` sans changement ; `curl -I` → 200 sur l'URL Edge ;
+  push → Action verte → changement en ligne.
+- *Preuve (2026-07-09) : `No changes. Your infrastructure matches the
+  configuration.` ; HTTP/2 200 sur
+  https://2d7b7ca2-9ded-41d4-b573-d7552f027199.svc.edge.scw.cloud (home,
+  sous-pages, 404) ; 12 ressources Terraform, state distant privé.*
 
 ### T-densifier-catalogue — 4 médias et ~10 ressources de plus  ⬜
 

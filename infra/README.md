@@ -39,7 +39,11 @@ GitHub Actions.
    chmod 600 ~/.aws/credentials
 
    export TF_VAR_project_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+   export TF_VAR_owner_user_id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"  # IAM → Users
    ```
+
+   Si `~/.aws/credentials` sert déjà à autre chose, utiliser un profil dédié
+   `[scaleway]` et préfixer les commandes par `AWS_PROFILE=scaleway`.
 
 3. Créer le bucket du state (hors Terraform, volontairement) :
 
@@ -50,14 +54,20 @@ GitHub Actions.
 
 4. `terraform init && terraform plan && terraform apply` depuis `infra/`.
 
-5. Clé API pour le déploiement GitHub : dans la console IAM, créer une clé API
-   portée par l'application `github-deploy-computelearning` (créée par
-   Terraform, id dans `terraform output`), puis dans ton terminal :
+5. Clé API pour le déploiement GitHub : une clé portée par l'application
+   `github-deploy-computelearning` (créée par Terraform, id dans
+   `terraform output`), avec date d'expiration (exigée par l'organisation).
+   Sans jamais afficher le secret :
 
    ```sh
-   gh secret set SCW_ACCESS_KEY   # coller l'access key
-   gh secret set SCW_SECRET_KEY   # coller la secret key
+   RESP=$(curl -s -X POST -H "X-Auth-Token: $SCW_SECRET_KEY" -H "Content-Type: application/json" \
+     -d '{"application_id":"<app-id>","description":"GitHub Actions deploy","expires_at":"2027-07-09T00:00:00Z"}' \
+     https://api.scaleway.com/iam/v1alpha1/api-keys)
+   echo "$RESP" | python3 -c "import json,sys; print(json.load(sys.stdin)['access_key'], end='')" | gh secret set SCW_ACCESS_KEY
+   echo "$RESP" | python3 -c "import json,sys; print(json.load(sys.stdin)['secret_key'], end='')" | gh secret set SCW_SECRET_KEY
    ```
+
+   Clé actuelle : expire le 2027-07-09 — la renouveler avant.
 
 ## Au quotidien
 

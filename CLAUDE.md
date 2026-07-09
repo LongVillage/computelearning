@@ -36,8 +36,16 @@ Docs Astro : https://docs.astro.build — notamment
 ## Gouvernance & déploiement
 
 - Repo public, `main` protégée : tout passe par PR, merge = décision de Julien.
-- Pas de déploiement pour l'instant. Cible : self-host Scaleway (Terraform + CI/CD),
-  chantier séparé.
+- **Prod : https://2d7b7ca2-9ded-41d4-b573-d7552f027199.svc.edge.scw.cloud**
+  (bucket Scaleway + Edge Services, voir `infra/README.md`). Déploiement
+  automatique à chaque push sur `main` (`.github/workflows/site.yml`) ;
+  cache Edge TTL 1 h, pas de purge auto.
+- Infra : Terraform dans `infra/`, apply manuel en local uniquement
+  (`AWS_PROFILE=scaleway` + `TF_VAR_project_id` + `TF_VAR_owner_user_id`).
+- **Repo public : zéro secret, zéro tfstate ici, jamais.** Les secrets vivent dans
+  `~/.config/scw/config.yaml`, `~/.aws/credentials` (profil `scaleway`) et les
+  secrets GitHub Actions. Ne jamais afficher un secret dans une conversation :
+  pipe direct (`curl → gh secret set`).
 
 ## Leçons
 
